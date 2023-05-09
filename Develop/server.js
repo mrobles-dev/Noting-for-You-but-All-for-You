@@ -1,6 +1,6 @@
 const express = require('express');
-const path = ('path');
-const fs = ('require');
+const path = require('path');
+const fs = require('fs');
 
 const PORT = process.env.PORT || 3001;
 
@@ -10,21 +10,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use (express.static('public'));
 
-app.get('/', (req, res)=>
-res.sendFile(path.join(__dirname,'/public/index.html'))
+app.get("/", (req, res) =>
+  res.sendFile(path.join(__dirname, "/public/index.html"))
 );
 
-//getting request from notes page
+
+app.get("/notes", (req, res) =>
+  res.sendFile(path.join(__dirname, "/public/notes.html"))
+);
+
+
+// getting request from notes page
 app.get('/notes', (req, res) =>{
 // send confirm to client
 res.status(200).json(`${req.method} request received to get notes`);
-//log to term
+// log to term
 console.info(`${req.method} request received to get notes`);
 });
 
 
 //POST
-app.post('/index', (req, res) =>{
+app.post('/notes', (req, res) =>{
 // msg post was received
 console.info(`${req.method} request received to add notes`);
 
@@ -71,4 +77,5 @@ res.status(201).json(response);
 
 );
 
+app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 
