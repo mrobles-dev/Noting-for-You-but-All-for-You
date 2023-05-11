@@ -21,16 +21,23 @@ app.get("/notes", (req, res) =>
 
 
 // getting request from notes page
-app.get('/notes', (req, res) =>{
+app.get('/api/notes', (req, res) =>{
 // send confirm to client
-res.status(200).json(`${req.method} request received to get notes`);
+   fs.readFile('./db/db.json', 'utf8', (err, data) =>{
+        if (err){
+            console.log(err);
+        } else {
+            const parsedNotes = JSON.parse(data);
+           res.status(200).json(parsedNotes)
+// res.status(200).json(`${req.method} request received to get notes`);
 // log to term
+        }});
 console.info(`${req.method} request received to get notes`);
 });
 
 
 //POST
-app.post('/notes', (req, res) =>{
+app.post('/api/notes', (req, res) =>{
 // msg post was received
 console.info(`${req.method} request received to add notes`);
 
